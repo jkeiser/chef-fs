@@ -1,0 +1,31 @@
+sudo: false
+language: ruby
+cache: bundler
+before_install:
+- bundle --version
+- gem --version
+script:
+- bundle install --jobs=3 --retry=3
+- bundle exec rake build
+- bundle exec rake spec
+rvm:
+- 2.0
+- 2.1
+- 2.2
+matrix:
+  include:
+  - env: 'GEMFILE_MOD="gem ''chef'', github: ''chef/chef''"'
+    rvm: 2.2
+  - env: GEMFILE_MOD="gem 'chef', '~> 12.3', '<= 12.4'"
+    rvm: 2.2
+  - env: GEMFILE_MOD="gem 'chef', '~> 12.2', '<= 12.3'"
+    rvm: 2.2
+  - env: GEMFILE_MOD="gem 'chef', '~> 12.1', '<= 12.2'"
+    rvm: 2.2
+  - env: GEMFILE_MOD="gem 'chef', '~> 12.0', '<= 12.1'"
+    rvm: 2.2
+  - env: GEMFILE_MOD="gem 'chef', '~> 11'"
+    rvm: 2.2
+notifications:
+  slack:
+    secure: yExg2jLNTXMVcRi8/J178DGudK67HJVRUhnEeDo2elh2DdUF8FgIgn8nrnNXmu4cO5o9upZck6sz2bHgTwOT5dYG2m4qtg6z6r+mvOaRC+F48VxtYUrN4rBRfsoRESXmRPfaL3qRm3EgiIdy7XM2aFr3Elr3IwEQNXQUuWAchjBC56rD6LWh5kd+/W9f/NH5wRSvAGDke7bxVVlydttm9rGvPUfroqq0bmXvYIHm7P5+IcQ/DOBZRWAaf9I6ugqJY0IJAi1O6Sx4+6JTBWLaQOdGx0lgaQYps0l0xhZCyrvipN0O50tEvEZwAQoKTX2w1MU00XiDAMXOmfxvoI9iHWniT3PDa9+Pn0RoTtmnGPaS2YD4jSz61vI+mKWSZvhXdXdqcXPHoGi7EDwnxzD5hFzt6SarQVUQXGY7OKEqmrRWmyAYWHC9sGK3ElkZhmISzBIvuDW8F+FcdFVspWzdsXHpTPLFGX4MWc3qCATuoCfFLcYoyGWBoqVw6OxHa9/hyrbDCebvoRC06GHj9+j7mu1Ru9vFFdRUQST7Tht2C39siimrAk6OsGkb+5+2fgKe65Wq3gAKkcVNYoH2TLpSzr19WESq2+DC9Q+WnLlwmamKbFXWd3eNEz3lOw9zw0s3HICz0XMMqVT01W80e+04X2gQHrKOCbpcS+poi9TnfaU=
